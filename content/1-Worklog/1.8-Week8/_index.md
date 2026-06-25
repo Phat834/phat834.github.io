@@ -10,7 +10,7 @@ pre: " <b> 1.8. </b> "
 {{% /notice %}}
 
 ### Overview:
-Finally, in Week 8, the work of systematizing all system architecture diagrams, API specification documents, and the source code built over the past time was focused on completion to serve the phase progress report dossier (mid-term report). At the same time, online team meetings were also held to comprehensively re-evaluate the application development roadmap, thereby reasonably re-dividing work modules for the next phase based on practical orientations from the internship unit.
+In Week 8, the work of systematizing all system architecture diagrams, API specification documents, and the source code built over the past time was focused on completion to serve the phase progress report dossier (mid-term report). At the same time, online team meetings were also held to comprehensively re-evaluate the application development roadmap, thereby reasonably re-dividing work modules for the next phase based on practical orientations from the internship unit.
 
 ### Tasks to be carried out this week:
 * Systematize all architecture diagrams, API specifications, and source code.
