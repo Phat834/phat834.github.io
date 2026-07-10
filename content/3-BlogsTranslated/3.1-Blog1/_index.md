@@ -94,6 +94,6 @@ If you are building a serverless or microservices system on AWS, especially when
 * [How IAG accelerated service-to-service communication with Amazon VPC Lattice](https://aws.amazon.com/vi/blogs/networking-and-content-delivery/how-iag-accelerated-service-to-service-communication-with-amazon-vpc-lattice/)
 ---
 
-<img src="/images/Blog/blog1-1.png" style="max-width:100%; margin-bottom:16px;" />
+<img src="/images/Blog/blog1-1.jpg" style="max-width:100%; margin-bottom:16px;" />
 
-<img src="/images/Blog/blog1-2.png" style="max-width:100%; margin-bottom:16px;" />
+<img src="/images/Blog/blog1-2.jpg" style="max-width:100%; margin-bottom:16px;" />

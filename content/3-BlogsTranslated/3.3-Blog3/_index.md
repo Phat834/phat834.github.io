@@ -176,6 +176,6 @@ https://aws.amazon.com/vi/blogs/networking-and-content-delivery/how-united-airli
 
 ---
 
-<img src="/images/Blog/blog3-3.png" style="max-width:100%; margin-bottom:16px;" />
-<img src="/images/Blog/blog3-2.png" style="max-width:100%; margin-bottom:16px;" />
-<img src="/images/Blog/blog3-1.png" style="max-width:100%; margin-bottom:16px;" />
+<img src="/images/Blog/blog3-3.jpg" style="max-width:100%; margin-bottom:16px;" />
+<img src="/images/Blog/blog3-2.jpg" style="max-width:100%; margin-bottom:16px;" />
+<img src="/images/Blog/blog3-1.jpg" style="max-width:100%; margin-bottom:16px;" />

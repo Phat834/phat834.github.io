@@ -97,6 +97,6 @@ https://aws.amazon.com/vi/blogs/networking-and-content-delivery/how-iag-accelera
 ---
 
 
-<img src="/images/Blog/blog1-1.png" style="max-width:100%; margin-bottom:16px;" />
+<img src="/images/Blog/blog1-1.jpg" style="max-width:100%; margin-bottom:16px;" />
 
-<img src="/images/Blog/blog1-2.png" style="max-width:100%; margin-bottom:16px;" />
+<img src="/images/Blog/blog1-2.jpg" style="max-width:100%; margin-bottom:16px;" />

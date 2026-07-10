@@ -185,4 +185,4 @@ https://aws.amazon.com/vi/blogs/database/logical-replication-improvements-in-ama
 
 ---
 
-<img src="/images/Blog/blog2.png" style="max-width:100%; margin-bottom:16px;" />
+<img src="/images/Blog/blog2.jpg" style="max-width:100%; margin-bottom:16px;" />
