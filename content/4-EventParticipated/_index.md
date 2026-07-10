@@ -10,7 +10,7 @@ During my internship, I had the opportunity to attend two events. Each event was
 ### [Event 1](4.1-Event1/)
 &emsp;**Event Title:** Exploring and Updating Cloud Computing Technology Trends with AWS Experts
 
-&emsp;**Time:** 09:00 AM, August 13, 2025
+&emsp;**Time:** 09:00 AM, May 9, 2025
 
 &emsp;**Location:** 26th Floor, Bitexco Financial Tower, 02 Hai Trieu Street, Ben Nghe Ward, District 1, Ho Chi Minh City
 
