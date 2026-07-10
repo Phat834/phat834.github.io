@@ -1,17 +1,27 @@
 ---
-title: "Week 1 Worklog"
-date: 2026-04-13
+title: "Worklog Week 1"
+date: 2026-04-20
 weight: 1
 chapter: false
 pre: " <b> 1.1. </b> "
 ---
 
-### Overview:
-In Week 1, the internship began with systematizing and reviewing accumulated foundational knowledge, while actively researching and approaching new technologies to prepare a solid theoretical basis for the project's development direction.
+### Objectives for Week 1:
+* Review and consolidate foundational knowledge of previously learned technologies.
+* Research and explore new technologies to shape the direction of the internship topic.
+* Set up the initial working environment and development tools for the project.
 
-### Tasks to be carried out this week:
-* Systematize and review foundational knowledge.
-* Actively research and approach new technologies.
+### Tasks for Week 1:
 
-### Achievements:
-* Prepared a solid theoretical foundation for the project's development direction.
+| Day | Task | Start Date | End Date | References |
+| :---: | :--- | :---: | :---: | :--- |
+| Mon | Kick off the internship, review core programming concepts. | 20/04/2026 | 21/04/2026 | [HUTECH Internship Guideline](https://www.hutech.edu.vn/) |
+| Tue | Research overview documents and requirements from the internship host company. | 21/04/2026 | 22/04/2026 | [First Cloud AI Journey Introduction](https://aws.amazon.com/) |
+| Wed | Explore modern Cloud and AI technology trends. | 22/04/2026 | 23/04/2026 | [AWS Cloud Practitioner Essentials](https://aws.amazon.com/training/) |
+| Thu | Analyze potential directions for the graduation internship topic. | 23/04/2026 | 24/04/2026 | [Google Scholar & Tech Blogs](https://scholar.google.com/) |
+| Fri | Synthesize foundational knowledge, select technologies, and finalize the Week 1 topic. | 24/04/2026 | 26/04/2026 | [Software Engineering Methodologies](https://www.scrum.org/) |
+
+### Achievements for Week 1:
+* **AWS Service Operations:** Acquired a comprehensive overview of the cloud ecosystem to be applied to the graduation thesis.
+* **Technical Skills:** Consolidated system programming mindset; learned how to approach and analyze a new technology independently.
+* **Knowledge Foundation:** Clearly defined the scope of knowledge required to prepare for the entire long-term internship.

@@ -8,7 +8,7 @@ pre: " <b> 4.1. </b> "
 
 Tên chủ đề: Tìm hiểu và Cập nhật các Xu hướng Công nghệ Điện toán Đám mây mới cùng Chuyên gia AWS.
 
-Tóm tắt nội dung chính:
+**Tóm tắt nội dung chính:**
 
 Cập nhật công nghệ mới trong tuần: Các diễn giả từ AWS đã chia sẻ về các dịch vụ/tính năng mới nhất vừa được tối ưu hóa trong hệ sinh thái AWS (như quản lý chi phí đám mây, các cập nhật về bảo mật hạ tầng, và tối ưu hóa hiệu năng hệ thống).
 

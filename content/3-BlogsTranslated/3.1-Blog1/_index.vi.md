@@ -1,126 +1,102 @@
 ---
 title: "Blog 1"
-date: 2024-01-01
+date: 2026-07-07
 weight: 1
 chapter: false
 pre: " <b> 3.1. </b> "
 ---
-{{% notice warning %}}
-⚠️ **Lưu ý:** Các thông tin dưới đây chỉ nhằm mục đích tham khảo, vui lòng **không sao chép nguyên văn** cho bài báo cáo của bạn kể cả warning này.
+
+
+{{% notice note %}}
+📌 **Infor:** Blog 1 - Amazon VPC Lattice
 {{% /notice %}}
 
-# Bắt đầu với healthcare data lakes: Sử dụng microservices
+# Amazon VPC Lattice - Khi microservices không còn phải đi vòng để giao tiếp với nhau
 
-Các data lake có thể giúp các bệnh viện và cơ sở y tế chuyển dữ liệu thành những thông tin chi tiết về doanh nghiệp và duy trì hoạt động kinh doanh liên tục, đồng thời bảo vệ quyền riêng tư của bệnh nhân. **Data lake** là một kho lưu trữ tập trung, được quản lý và bảo mật để lưu trữ tất cả dữ liệu của bạn, cả ở dạng ban đầu và đã xử lý để phân tích. data lake cho phép bạn chia nhỏ các kho chứa dữ liệu và kết hợp các loại phân tích khác nhau để có được thông tin chi tiết và đưa ra các quyết định kinh doanh tốt hơn.
+Chào mọi người, hôm nay mình chia sẻ nhanh một case study từ AWS về cách **Insurance Australia Group (IAG)** dùng **Amazon VPC Lattice** để cải thiện giao tiếp giữa các service trong kiến trúc serverless.
 
-Bài đăng trên blog này là một phần của loạt bài lớn hơn về việc bắt đầu cài đặt data lake dành cho lĩnh vực y tế. Trong bài đăng blog cuối cùng của tôi trong loạt bài, *“Bắt đầu với data lake dành cho lĩnh vực y tế: Đào sâu vào Amazon Cognito”*, tôi tập trung vào các chi tiết cụ thể của việc sử dụng Amazon Cognito và Attribute Based Access Control (ABAC) để xác thực và ủy quyền người dùng trong giải pháp data lake y tế. Trong blog này, tôi trình bày chi tiết cách giải pháp đã phát triển ở cấp độ cơ bản, bao gồm các quyết định thiết kế mà tôi đã đưa ra và các tính năng bổ sung được sử dụng. Bạn có thể truy cập các code samples cho giải pháp tại Git repo này để tham khảo.
-
----
-
-## Hướng dẫn kiến trúc
-
-Thay đổi chính kể từ lần trình bày cuối cùng của kiến trúc tổng thể là việc tách dịch vụ đơn lẻ thành một tập hợp các dịch vụ nhỏ để cải thiện khả năng bảo trì và tính linh hoạt. Việc tích hợp một lượng lớn dữ liệu y tế khác nhau thường yêu cầu các trình kết nối chuyên biệt cho từng định dạng; bằng cách giữ chúng được đóng gói riêng biệt với microservices, chúng ta có thể thêm, xóa và sửa đổi từng trình kết nối mà không ảnh hưởng đến những kết nối khác. Các microservices được kết nối rời thông qua tin nhắn publish/subscribe tập trung trong cái mà tôi gọi là “pub/sub hub”.
-
-Giải pháp này đại diện cho những gì tôi sẽ coi là một lần lặp nước rút hợp lý khác từ last post của tôi. Phạm vi vẫn được giới hạn trong việc nhập và phân tích cú pháp đơn giản của các **HL7v2 messages** được định dạng theo **Quy tắc mã hóa 7 (ER7)** thông qua giao diện REST.
-
-**Kiến trúc giải pháp bây giờ như sau:**
-
-> *Hình 1. Kiến trúc tổng thể; những ô màu thể hiện những dịch vụ riêng biệt.*
+IAG là một công ty bảo hiểm lớn tại Úc và New Zealand, vận hành nhiều hệ thống phục vụ khách hàng như mua bảo hiểm, quản lý hợp đồng và các dịch vụ liên quan. Họ xây dựng nền tảng trên AWS theo hướng serverless với nhiều microservices chạy bằng **AWS Lambda**. Khi số lượng service tăng lên, việc các service gọi qua lại bắt đầu gây ra vấn đề về hiệu năng và độ phức tạp.
 
 ---
 
-Mặc dù thuật ngữ *microservices* có một số sự mơ hồ cố hữu, một số đặc điểm là chung:  
-- Chúng nhỏ, tự chủ, kết hợp rời rạc  
-- Có thể tái sử dụng, giao tiếp thông qua giao diện được xác định rõ  
-- Chuyên biệt để giải quyết một việc  
-- Thường được triển khai trong **event-driven architecture**
+## Vấn đề trước đây
 
-Khi xác định vị trí tạo ranh giới giữa các microservices, cần cân nhắc:  
-- **Nội tại**: công nghệ được sử dụng, hiệu suất, độ tin cậy, khả năng mở rộng  
-- **Bên ngoài**: chức năng phụ thuộc, tần suất thay đổi, khả năng tái sử dụng  
-- **Con người**: quyền sở hữu nhóm, quản lý *cognitive load*
+Trong kiến trúc cũ, khi một Lambda gọi sang service khác, request không đi trực tiếp mà phải vòng qua nhiều lớp như **Transit Gateway**, **Egress VPC**, proxy, Internet rồi mới tới **API Gateway** và service đích.
+
+Dù service vẫn nằm trong AWS, request lại phải đi một vòng khá dài. Điều này làm tăng độ trễ, khiến kiến trúc phức tạp hơn và khó quản lý. Khi một service gọi tiếp nhiều service khác, độ trễ còn bị cộng dồn. Ngoài ra, endpoint thường bị hardcode nên việc thay đổi cũng kém linh hoạt.
 
 ---
 
-## Lựa chọn công nghệ và phạm vi giao tiếp
+## Amazon VPC Lattice là gì?
 
-| Phạm vi giao tiếp                        | Các công nghệ / mô hình cần xem xét                                                        |
-| ---------------------------------------- | ------------------------------------------------------------------------------------------ |
-| Trong một microservice                   | Amazon Simple Queue Service (Amazon SQS), AWS Step Functions                               |
-| Giữa các microservices trong một dịch vụ | AWS CloudFormation cross-stack references, Amazon Simple Notification Service (Amazon SNS) |
-| Giữa các dịch vụ                         | Amazon EventBridge, AWS Cloud Map, Amazon API Gateway                                      |
+**Amazon VPC Lattice** giúp đơn giản hóa việc kết nối giữa các service trong AWS. Thay vì phải tự xử lý nhiều tầng networking, các service có thể giao tiếp với nhau thông qua một lớp kết nối chung, an toàn và dễ quản lý hơn.
+
+Trong case này, IAG dùng **Lattice Services** để expose các Lambda function, giúp các service giao tiếp trực tiếp trong mạng AWS mà không cần đi qua Internet.
 
 ---
 
-## The pub/sub hub
+## Kiến trúc mới
 
-Việc sử dụng kiến trúc **hub-and-spoke** (hay message broker) hoạt động tốt với một số lượng nhỏ các microservices liên quan chặt chẽ.  
-- Mỗi microservice chỉ phụ thuộc vào *hub*  
-- Kết nối giữa các microservice chỉ giới hạn ở nội dung của message được xuất  
-- Giảm số lượng synchronous calls vì pub/sub là *push* không đồng bộ một chiều
+IAG triển khai VPC Lattice bằng cách tạo các **Service Network** riêng cho từng môi trường như **Development**, **Staging** và **Production**. Các network này được quản lý tập trung và chia sẻ sang các account tương ứng.
 
-Nhược điểm: cần **phối hợp và giám sát** để tránh microservice xử lý nhầm message.
+Cách làm này giúp tách biệt môi trường rõ ràng nhưng vẫn dễ quản lý. Đồng thời, họ dùng **Auth Policy** để chỉ cho phép traffic từ các VPC hợp lệ, tăng thêm một lớp kiểm soát bảo mật.
 
 ---
 
-## Core microservice
+## Luồng giao tiếp mới
 
-Cung cấp dữ liệu nền tảng và lớp truyền thông, gồm:  
-- **Amazon S3** bucket cho dữ liệu  
-- **Amazon DynamoDB** cho danh mục dữ liệu  
-- **AWS Lambda** để ghi message vào data lake và danh mục  
-- **Amazon SNS** topic làm *hub*  
-- **Amazon S3** bucket cho artifacts như mã Lambda
+Sau khi dùng VPC Lattice, request giữa các service đi ngắn hơn rất nhiều. Lambda chỉ cần gọi đến domain nội bộ, **Route 53** sẽ map sang Lattice service, rồi request được chuyển trực tiếp đến Lambda của service đích.
 
-> Chỉ cho phép truy cập ghi gián tiếp vào data lake qua hàm Lambda → đảm bảo nhất quán.
+Nhờ vậy, traffic không còn phải đi qua Internet hay nhiều lớp trung gian, giúp giảm độ trễ và tăng tính bảo mật.
 
 ---
 
-## Front door microservice
+## Kết quả
 
-- Cung cấp API Gateway để tương tác REST bên ngoài  
-- Xác thực & ủy quyền dựa trên **OIDC** thông qua **Amazon Cognito**  
-- Cơ chế *deduplication* tự quản lý bằng DynamoDB thay vì SNS FIFO vì:
-  1. SNS deduplication TTL chỉ 5 phút
-  2. SNS FIFO yêu cầu SQS FIFO
-  3. Chủ động báo cho sender biết message là bản sao
+Sau khi triển khai, IAG ghi nhận độ trễ giữa các service giảm từ **46% đến 83%**, với **P95 latency** cải thiện từ **15% đến 92%**. Đây là mức cải thiện khá lớn, đặc biệt với hệ thống có nhiều service gọi qua lại.
+
+Ngoài ra, kiến trúc cũng gọn hơn, dễ vận hành hơn và giảm phụ thuộc vào các thành phần networking phức tạp.
 
 ---
 
-## Staging ER7 microservice
+## Lợi ích chính
 
-- Lambda “trigger” đăng ký với pub/sub hub, lọc message theo attribute  
-- Step Functions Express Workflow để chuyển ER7 → JSON  
-- Hai Lambda:
-  1. Sửa format ER7 (newline, carriage return)
-  2. Parsing logic  
-- Kết quả hoặc lỗi được đẩy lại vào pub/sub hub
+VPC Lattice giúp giảm latency rõ rệt, đơn giản hóa kiến trúc mạng và cải thiện bảo mật vì traffic không cần đi ra Internet. Việc tách môi trường cũng rõ ràng hơn, phù hợp với hệ thống nhiều account. Đặc biệt, nó rất hợp với kiến trúc serverless dùng Lambda.
+
+Các lợi ích chính có thể tóm tắt như sau:
+
+* Giảm độ trễ khi các service giao tiếp với nhau.
+* Đơn giản hóa kiến trúc mạng giữa các microservices.
+* Hạn chế việc traffic phải đi qua Internet.
+* Tăng khả năng kiểm soát bảo mật bằng Auth Policy.
+* Phù hợp với hệ thống nhiều môi trường và nhiều AWS account.
+* Hỗ trợ tốt cho kiến trúc serverless sử dụng AWS Lambda.
 
 ---
 
-## Tính năng mới trong giải pháp
+## Một vài lưu ý
 
-### 1. AWS CloudFormation cross-stack references
-Ví dụ *outputs* trong core microservice:
-```yaml
-Outputs:
-  Bucket:
-    Value: !Ref Bucket
-    Export:
-      Name: !Sub ${AWS::StackName}-Bucket
-  ArtifactBucket:
-    Value: !Ref ArtifactBucket
-    Export:
-      Name: !Sub ${AWS::StackName}-ArtifactBucket
-  Topic:
-    Value: !Ref Topic
-    Export:
-      Name: !Sub ${AWS::StackName}-Topic
-  Catalog:
-    Value: !Ref Catalog
-    Export:
-      Name: !Sub ${AWS::StackName}-Catalog
-  CatalogArn:
-    Value: !GetAtt Catalog.Arn
-    Export:
-      Name: !Sub ${AWS::StackName}-CatalogArn
+Hiện tại IAG vẫn đang dùng **Auth Policy** ở mức Service Network, tức là kiểm soát theo VPC. Trong tương lai, họ muốn kiểm soát chi tiết hơn ở từng service.
+
+Ngoài ra, event format từ VPC Lattice khác với API Gateway nên các team cần cập nhật lại handler để xử lý đúng.
+
+---
+
+## Kết luận
+
+Amazon VPC Lattice giúp IAG giải quyết bài toán quen thuộc trong microservices: giao tiếp nhanh hơn, đơn giản hơn và an toàn hơn. Thay vì phải đi vòng qua nhiều lớp mạng, các service có thể gọi trực tiếp trong AWS, giúp giảm độ trễ đáng kể và làm kiến trúc gọn hơn.
+
+Nếu bạn đang xây dựng hệ thống serverless hoặc microservices trên AWS, đặc biệt khi số lượng service bắt đầu nhiều lên, VPC Lattice là một lựa chọn hay ho rất đáng cân nhắc.
+
+---
+## Link tham khảo
+
+https://aws.amazon.com/vi/blogs/networking-and-content-delivery/how-iag-accelerated-service-to-service-communication-with-amazon-vpc-lattice/
+
+
+---
+
+
+<img src="/images/Blog/blog1-1.png" style="max-width:100%; margin-bottom:16px;" />
+
+<img src="/images/Blog/blog1-2.png" style="max-width:100%; margin-bottom:16px;" />

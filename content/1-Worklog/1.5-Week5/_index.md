@@ -1,21 +1,27 @@
 ---
 title: "Week 5 Worklog"
-date: 2024-01-01
-weight: 1
+date: 2026-05-18
+weight: 5
 chapter: false
 pre: " <b> 1.5. </b> "
 ---
 
+### Objectives for Week 5:
+* Focus on in-depth research of comprehensive security solutions and methods for API systems.
+* Learn about authentication and authorization mechanisms to protect system resources.
+* Analyze and evaluate the performance of the current database architecture to prepare for query optimization.
 
+### Tasks for Week 5:
 
-### Overview:
-The mid-term phase of the internship began in Week 5, when research was deeply focused on security methods for the API system, thoroughly understanding the mechanisms of authentication and secure access authorization to maximize the protection of the application's data resources. At the same time, the process of analyzing and re-evaluating the performance of current database design solutions was also conducted to prepare a plan for optimizing query speed for the next development stages.
+| Day | Task | Start Date | End Date | References |
+| :---: | :--- | :---: | :---: | :--- |
+| 2 | Research common API security standards (OAuth2, JWT, API Keys). | 2026-05-18 | 2026-05-19 | [OWASP API Security Top 10](https://owasp.org/www-project-api-security/) |
+| 3 | Construct analysis diagrams for authentication and resource access authorization data flows. | 2026-05-19 | 2026-05-20 | [Authentication vs Authorization Logic](https://auth0.com/docs/) |
+| 4 | Collect data and run benchmark queries to measure the performance of the current database. | 2026-05-20 | 2026-05-21 | [Database Performance Benchmarking](https://dev.mysql.com/doc/) |
+| 5 | Identify performance bottlenecks within the database schema design. | 2026-05-21 | 2026-05-22 | [SQL Query Optimization Techniques](https://www.postgresql.org/docs/) |
+| 6 | Propose architectural improvements for the database schema to prepare for the accelerated development phase. | 2026-05-22 | 2026-05-24 | [High-Performance Database Systems](https://aws.amazon.com/nosql/) |
 
-### Tasks to be carried out this week:
-* Conduct in-depth research on security methods for the API system.
-* Understand authentication mechanisms and secure access authorization.
-* Analyze and evaluate the performance of current database design solutions.
-
-### Achievements:
-* Clearly understood authentication and authorization mechanisms, ensuring maximum protection for application data resources.
-* Evaluated database performance and prepared query speed optimization plans for upcoming stages.
+### Week 5 Achievements:
+* **AWS Service Operation:** Mastered methods for integrating security solutions into cloud data gateways.
+* **Technical Skills:** Successfully analyzed database query performance charts and designed multi-layered API security solutions.
+* **Knowledge Foundation:** Acquired a strong design mindset for information security systems and software resource optimization from the ground up.

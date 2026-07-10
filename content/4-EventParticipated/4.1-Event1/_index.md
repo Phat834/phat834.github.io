@@ -8,7 +8,7 @@ pre: " <b> 4.1. </b> "
 
 Topic Title: Exploring and Updating New Cloud Computing Technology Trends with AWS Experts.
 
-Key Summary:
+**Key Summary:**
 
 Weekly Tech Updates: AWS speakers shared the latest optimized services and features within the AWS ecosystem (such as cloud cost management, infrastructure security updates, and system performance optimization).
 

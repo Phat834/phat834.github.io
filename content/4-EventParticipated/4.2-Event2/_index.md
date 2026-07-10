@@ -1,14 +1,14 @@
 ---
 title: "Event 2"
 date: 2026-06-06
-weight: 1
+weight: 2
 chapter: false
 pre: " <b> 4.2. </b> "
 ---
 
 Topic Title: Career Orientation in the Tech Industry and Strategic Perspectives from a Leader.
 
-Key Summary:
+**Key Summary:**
 
 The Big Picture of the IT Industry: The CEO shared insights into current shifts in the tech market and the intersection between technology (Tech) and business operations (Business). It also highlighted the challenges and opportunities for IT personnel amid the boom of AI.
 

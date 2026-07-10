@@ -1,22 +1,27 @@
 ---
 title: "Worklog Tuần 8"
-date: 2024-01-01
-weight: 1
+date: 2026-06-08
+weight: 8
 chapter: false
 pre: " <b> 1.8. </b> "
 ---
 
+### Mục tiêu cho tuần 8:
+* Hệ thống hóa toàn bộ các tài nguyên kỹ thuật bao gồm sơ đồ, đặc tả API và mã nguồn.
+* Chuẩn bị đầy đủ, kỹ lưỡng nội dung tài liệu phục vụ đợt báo cáo tiến độ giữa kỳ.
+* Tổ chức họp nhóm trực tuyến nhằm đánh giá lộ trình và tái phân chia các module công việc.
 
-### Tổng quan:
-Vào Tuần 8, công tác hệ thống hóa lại toàn bộ các sơ đồ kiến trúc hệ thống, tài liệu đặc tả API và phần mã nguồn đã xây dựng trong suốt thời gian qua được tập trung hoàn thiện để phục vụ cho bộ hồ sơ báo cáo tiến độ giai đoạn (báo cáo giữa kỳ). Đồng thời, các buổi họp nhóm trực tuyến cũng được tổ chức nhằm đánh giá lại toàn diện lộ trình phát triển ứng dụng, từ đó thực hiện phân chia lại các module công việc một cách hợp lý cho giai đoạn tiếp theo dựa trên các định hướng thực tế từ đơn vị thực tập.
+### Nhiệm vụ cho tuần 8:
 
-### Các công việc triển khai trong tuần:
-* Hệ thống hóa lại toàn bộ sơ đồ kiến trúc, tài liệu đặc tả API và mã nguồn.
-* Chuẩn bị và hoàn thiện bộ hồ sơ báo cáo tiến độ giai đoạn (báo cáo giữa kỳ).
-* Tổ chức họp nhóm trực tuyến để đánh giá lộ trình phát triển.
-* Phân chia lại các module công việc cho giai đoạn tiếp theo.
+| Ngày | Nhiệm vụ | Ngày bắt đầu | Ngày hoàn thành | Tài liệu tham khảo |
+| :---: | :--- | :---: | :---: | :--- |
+| 2 | Thu thập, phân loại toàn bộ sơ đồ kiến trúc hạ tầng đã vẽ ở tuần trước. | 08/06/2026 | 09/06/2026 | [Internal Project Repository](https://github.com/) |
+| 3 | Tổng hợp, cập nhật và làm sạch tài liệu đặc tả hệ thống kết nối API. | 09/06/2026 | 10/06/2026 | [Technical Documentation Review](https://google.github.io/styleguide/) |
+| 4 | Viết báo cáo tóm tắt tiến độ, cấu trúc lại mã nguồn đã xây dựng trong giai đoạn qua. | 10/06/2026 | 11/06/2026 | [Midterm Report Writing Guide](https://www.hutech.edu.vn/) |
+| 5 | Tổ chức cuộc họp trực tuyến với nhóm để đánh giá tổng thể tiến độ đạt được so với mục tiêu. | 11/06/2026 | 12/06/2026 | [Google Meet / Slack Operations](https://slack.com/) |
+| 6 | Tái phân chia công việc chi tiết cho từng thành viên theo định hướng mới từ mentor đơn vị thực tập. | 12/06/2026 | 14/06/2026 | [Agile Task Management Guide](https://www.atlassian.com/software/jira) |
 
-### Kết quả đạt được:
-* Hoàn thiện bộ hồ sơ báo cáo tiến độ giữa kỳ với đầy đủ sơ đồ, tài liệu và mã nguồn.
-* Đánh giá toàn diện và điều chỉnh lại lộ trình phát triển ứng dụng.
-* Hoàn thành việc phân chia công việc hợp lý cho các thành viên trong giai đoạn tiếp theo.
+### Thành tích tuần 8:
+* **Vận hành dịch vụ AWS:** Đánh giá độ tương thích của hạ tầng AWS đã dựng với tiến độ phát triển thực tế của phần mềm.
+* **Kỹ năng kỹ thuật:** Tổng hợp và biên soạn tài liệu khoa học; làm chủ kỹ năng quản lý tiến độ công việc thông qua cuộc họp điều phối.
+* **Nền tảng kiến thức:** Hiểu rõ cách thức vận hành một dự án thực tế theo mô hình Scrum/Agile linh hoạt và định hướng sản phẩm của doanh nghiệp.

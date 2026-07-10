@@ -1,14 +1,14 @@
 ---
 title: "Event 2"
 date: 2026-06-06
-weight: 1
+weight: 2
 chapter: false
 pre: " <b> 4.2. </b> "
 ---
 
 Tên chủ đề: Định hướng phát triển sự nghiệp trong ngành Công nghệ và Góc nhìn Chiến lược từ Nhà lãnh đạo.
 
-Tóm tắt nội dung chính:
+**Tóm tắt nội dung chính:**
 
 Bức tranh toàn cảnh ngành IT: Vị CEO đã chia sẻ về xu hướng chuyển dịch của thị trường công nghệ hiện nay, sự giao thoa giữa kỹ thuật (Tech) và vận hành doanh nghiệp (Business). Những thách thức và cơ hội cho nhân sự ngành IT trước sự bùng nổ của AI.
 

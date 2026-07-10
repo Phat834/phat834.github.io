@@ -1,115 +1,194 @@
 ---
 title: "Proposal"
-date: 2024-01-01
+date: 2026-06-22
 weight: 2
 chapter: false
 pre: " <b> 2. </b> "
 ---
-{{% notice warning %}}
-⚠️ **Note:** The information below is for reference purposes only. Please **do not copy verbatim** for your report, including this warning.
+
+{{% notice note %}}
+📌 **Info:** VDCMS project proposal — a content management system integrated with speech-to-text on AWS.
 {{% /notice %}}
 
-In this section, you need to summarize the contents of the workshop that you **plan** to conduct.
+# VDCMS - Voice-Driven Content Management System
 
-# IoT Weather Platform for Lab Research
-## A Unified AWS Serverless Solution for Real-Time Weather Monitoring
+## AWS solution for a content management system integrated with speech-to-text
+
+---
 
 ### 1. Executive Summary
-The IoT Weather Platform is designed for the ITea Lab team in Ho Chi Minh City to enhance weather data collection and analysis. It supports up to 5 weather stations, with potential scalability to 10-15, utilizing Raspberry Pi edge devices with ESP32 sensors to transmit data via MQTT. The platform leverages AWS Serverless services to deliver real-time monitoring, predictive analytics, and cost efficiency, with access restricted to 5 lab members via Amazon Cognito.
+
+VDCMS is a content management system that supports users in creating, storing, and managing reports through a modern web interface. The highlight of the system is the integration of a speech-to-text workflow using Amazon Transcribe, allowing users to record content and convert it into text for the report creation process.
+
+The system is designed for a demo/MVP environment with the assumption of approximately 50 users, around 100 reports per month, and about 30 minutes of audio recording per month. The architecture uses AWS services such as Amazon CloudFront, Amazon S3, AWS WAF, Application Load Balancer, Amazon EC2, Amazon RDS MySQL, Amazon SQS, Amazon Transcribe, Amazon SES, Amazon Cognito, AWS Secrets Manager, AWS Systems Manager, and Amazon CloudWatch.
+
+The objective of the project is to build a three-tier web architecture that is secure, operationally stable, capable of asynchronous task processing, and suitable for the scope of the project. Thanks to deployment using Infrastructure as Code, the team can delete all resources after testing to save costs and redeploy the same architecture when needed for grading.
+
+---
 
 ### 2. Problem Statement
-### What’s the Problem?
-Current weather stations require manual data collection, becoming unmanageable with multiple units. There is no centralized system for real-time data or analytics, and third-party platforms are costly and overly complex.
 
-### The Solution
-The platform uses AWS IoT Core to ingest MQTT data, AWS Lambda and API Gateway for processing, Amazon S3 for storage (including a data lake), and AWS Glue Crawlers and ETL jobs to extract, transform, and load data from the S3 data lake to another S3 bucket for analysis. AWS Amplify with Next.js provides the web interface, and Amazon Cognito ensures secure access. Similar to Thingsboard and CoreIoT, users can register new devices and manage connections, though this platform operates on a smaller scale and is designed for private use. Key features include real-time dashboards, trend analysis, and low operational costs.
+#### Current Problem
 
-### Benefits and Return on Investment
-The solution establishes a foundational resource for lab members to develop a larger IoT platform, serving as a study resource, and provides a data foundation for AI enthusiasts for model training or analysis. It reduces manual reporting for each station via a centralized platform, simplifying management and maintenance, and improves data reliability. Monthly costs are $0.66 USD per the AWS Pricing Calculator, with a 12-month total of $7.92 USD. All IoT equipment costs are covered by the existing weather station setup, eliminating additional development expenses. The break-even period of 6-12 months is achieved through significant time savings from reduced manual work.
+During the process of creating and managing reports, users often have to enter content manually, which can easily be time-consuming when reports contain many ideas or when quick notes need to be recorded from presentations, group meetings, or narrations. Without a centralized system, report data can be scattered, difficult to manage, difficult to track in terms of editing history, and difficult to expand with additional functions such as email sending, user authentication, or audio file processing.
+
+In addition, regular web systems, if deployed without a clear architecture, may face many limitations such as insufficient security, difficulty in access control, difficulty in tracking system errors, and difficulty in optimizing costs when running on the cloud.
+
+#### Solution
+
+VDCMS is proposed as a content management system deployed on AWS, combining a three-tier web model with an asynchronous event-processing workflow. The frontend SPA is stored on Amazon S3 and distributed through Amazon CloudFront. Requests from users are protected by AWS WAF and routed through Application Load Balancer to Amazon EC2, where the backend and Transcribe worker run.
+
+The system's relational data is stored in Amazon RDS MySQL. Audio files and temporary files used for Amazon Transcribe are stored on Amazon S3. When users submit an audio file, the system sends the job to Amazon SQS for asynchronous processing, then the worker on EC2 calls Amazon Transcribe to convert speech into text. Amazon SES is used to send emails, Amazon Cognito serves user authentication, AWS Secrets Manager manages sensitive information, and Amazon CloudWatch supports system monitoring.
+
+#### Benefits and Return on Investment (ROI)
+
+The solution helps reduce manual data entry when creating reports, supports users in converting recorded content into text more quickly, and centralizes data in a unified management system. The architecture also helps the team practice deploying important components of a real cloud system such as security, load balancing, storage, database, queue, asynchronous processing, monitoring, and secret management.
+
+For the project scope, the main benefit is not only the low operating cost in the demo/MVP environment, but also the ability to demonstrate a complete AWS architecture design mindset. The team can deploy, test, present, and delete resources after completion to avoid unnecessary costs.
+
+---
 
 ### 3. Solution Architecture
-The platform employs a serverless AWS architecture to manage data from 5 Raspberry Pi-based stations, scalable to 15. Data is ingested via AWS IoT Core, stored in an S3 data lake, and processed by AWS Glue Crawlers and ETL jobs to transform and load it into another S3 bucket for analysis. Lambda and API Gateway handle additional processing, while Amplify with Next.js hosts the dashboard, secured by Cognito. The architecture is detailed below:
 
-![IoT Weather Station Architecture](/images/2-Proposal/edge_architecture.jpeg)
+VDCMS applies a three-tier web architecture combined with asynchronous processing. The presentation layer includes Amazon S3 and Amazon CloudFront to serve the frontend SPA. The application layer includes AWS WAF, Application Load Balancer, and Amazon EC2 to protect, route, and process requests. The data layer includes Amazon RDS MySQL, Amazon S3, and supporting processing services such as Amazon SQS, Amazon Transcribe, Amazon SES, Amazon Cognito, AWS Secrets Manager, AWS Systems Manager, and Amazon CloudWatch.
 
-![IoT Weather Platform Architecture](/images/2-Proposal/platform_architecture.jpeg)
+![VDCMS Architecture](/images/2-Proposal/vdcms_architecture.png)
 
-### AWS Services Used
-- **AWS IoT Core**: Ingests MQTT data from 5 stations, scalable to 15.
-- **AWS Lambda**: Processes data and triggers Glue jobs (two functions).
-- **Amazon API Gateway**: Facilitates web app communication.
-- **Amazon S3**: Stores raw data in a data lake and processed outputs (two buckets).
-- **AWS Glue**: Crawlers catalog data, and ETL jobs transform and load it.
-- **AWS Amplify**: Hosts the Next.js web interface.
-- **Amazon Cognito**: Secures access for lab users.
+#### AWS Services Used
 
-### Component Design
-- **Edge Devices**: Raspberry Pi collects and filters sensor data, sending it to IoT Core.
-- **Data Ingestion**: AWS IoT Core receives MQTT messages from the edge devices.
-- **Data Storage**: Raw data is stored in an S3 data lake; processed data is stored in another S3 bucket.
-- **Data Processing**: AWS Glue Crawlers catalog the data, and ETL jobs transform it for analysis.
-- **Web Interface**: AWS Amplify hosts a Next.js app for real-time dashboards and analytics.
-- **User Management**: Amazon Cognito manages user access, allowing up to 5 active accounts.
+* **Amazon CloudFront:** Distributes the frontend SPA, caches static assets, and reduces load on the backend.
+* **Amazon S3:** Stores the frontend, audio files, temporary Transcribe files, and related data.
+* **AWS WAF:** Protects the web application with WebACL and Managed Rule Groups.
+* **Application Load Balancer:** Routes requests from users to the EC2 backend.
+* **Amazon EC2:** Runs the backend and Transcribe worker.
+* **Amazon RDS MySQL:** Stores the system's relational data.
+* **Amazon SQS:** Acts as a queue for Transcribe processing jobs and DLQ.
+* **Amazon Transcribe:** Converts audio files into text.
+* **Amazon SES:** Sends emails from the system.
+* **Amazon Cognito:** Supports user authentication.
+* **AWS Secrets Manager:** Manages sensitive information such as credentials and secrets.
+* **AWS Systems Manager:** Supports secure EC2 administration and operations.
+* **Amazon CloudWatch:** Collects metrics, sampled requests, RDS logs, and basic metrics from AWS services.
+* **IAM:** Manages access permissions between services according to the principle of least privilege.
+
+#### Component Design
+
+* **Frontend:** The SPA application is built and stored on Amazon S3, then distributed through Amazon CloudFront. Users access the system through CloudFront to increase page loading speed and reduce load on the backend.
+* **Edge Security:** AWS WAF is attached to the web access flow to filter abnormal requests, collect sampled requests, and reduce the risk of common attacks.
+* **Request Routing:** Application Load Balancer receives valid requests and forwards them to the EC2 backend.
+* **Backend:** EC2 runs the backend application, handling main business logic such as user management, report management, file upload, AWS service calls, and returning results to the frontend.
+* **Database:** Amazon RDS MySQL stores user data, reports, audio file metadata, and processing status.
+* **Audio Processing:** Audio files are stored in S3, then jobs are sent to SQS. The worker on EC2 pulls jobs from SQS, calls Amazon Transcribe, and updates the results back to the system.
+* **Email Sending:** Amazon SES is used to send notification emails or emails related to system functions.
+* **Authentication:** Amazon Cognito is oriented to serve as the main authentication system for users.
+* **Secret Management:** AWS Secrets Manager stores necessary secrets to avoid hard-coding sensitive information in the source code.
+* **Monitoring:** CloudWatch collects metrics from WAF, RDS, and AWS services. EC2 application logs are currently stored in the systemd journal.
+
+---
 
 ### 4. Technical Implementation
-**Implementation Phases**
-This project has two parts—setting up weather edge stations and building the weather platform—each following 4 phases:
-- Build Theory and Draw Architecture: Research Raspberry Pi setup with ESP32 sensors and design the AWS serverless architecture (1 month pre-internship)
-- Calculate Price and Check Practicality: Use AWS Pricing Calculator to estimate costs and adjust if needed (Month 1).
-- Fix Architecture for Cost or Solution Fit: Tweak the design (e.g., optimize Lambda with Next.js) to stay cost-effective and usable (Month 2).
-- Develop, Test, and Deploy: Code the Raspberry Pi setup, AWS services with CDK/SDK, and Next.js app, then test and release to production (Months 2-3).
 
-**Technical Requirements**
-- Weather Edge Station: Sensors (temperature, humidity, rainfall, wind speed), a microcontroller (ESP32), and a Raspberry Pi as the edge device. Raspberry Pi runs Raspbian, handles Docker for filtering, and sends 1 MB/day per station via MQTT over Wi-Fi.
-- Weather Platform: Practical knowledge of AWS Amplify (hosting Next.js), Lambda (minimal use due to Next.js), AWS Glue (ETL), S3 (two buckets), IoT Core (gateway and rules), and Cognito (5 users). Use AWS CDK/SDK to code interactions (e.g., IoT Core rules to S3). Next.js reduces Lambda workload for the fullstack web app.
+#### Implementation Phases
 
-### 5. Timeline & Milestones
-**Project Timeline**
-- Pre-Internship (Month 0): 1 month for planning and old station review.
-- Internship (Months 1-3): 3 months.
-    - Month 1: Study AWS and upgrade hardware.
-    - Month 2: Design and adjust architecture.
-    - Month 3: Implement, test, and launch.
-- Post-Launch: Up to 1 year for research.
+The project is implemented through the following main phases:
+
+* **Requirement Analysis and Architecture Design:** Define the VDCMS system scope, number of demo users, number of reports, audio recording needs, and suitable AWS services.
+* **Building Infrastructure with Infrastructure as Code:** Declare resources such as VPC, EC2, RDS, S3, SQS, WAF, ALB, CloudFront, and Secrets Manager so that the same architecture can be redeployed when needed.
+* **Frontend and Backend Deployment:** Build the frontend SPA, upload it to S3, configure CloudFront; deploy the backend and Transcribe worker on EC2.
+* **Asynchronous Processing Integration:** Configure S3, SQS, and Amazon Transcribe to process audio files, convert them into text, and update results back to the system.
+* **Security and Operations Configuration:** Set up IAM Role, Secrets Manager, Systems Manager, WAF, RDS logs, and CloudWatch metrics.
+* **Testing and Cost Optimization:** Test user flows, report creation flow, audio upload, Transcribe processing, email sending, and delete resources after completion to avoid incurring costs.
+
+#### Technical Requirements
+
+* **Frontend:** SPA application deployed through Amazon S3 and Amazon CloudFront.
+* **Backend:** Application running on Amazon EC2 t3.small, simultaneously handling the roles of backend and Transcribe worker.
+* **Database:** Amazon RDS MySQL db.t3.micro, 20 GB gp3, Single-AZ.
+* **Networking:** The architecture uses NAT Gateway, Application Load Balancer, and suitable subnets for the demo/MVP environment.
+* **Asynchronous Processing:** Amazon SQS manages the Transcribe job queue and DLQ to support error handling.
+* **Speech-to-text:** Amazon Transcribe processes about 30 minutes of audio recording per month.
+* **Email:** Amazon SES sends about 200 emails per month.
+* **Authentication:** Amazon Cognito supports about 50 MAU within the Free Tier.
+* **Security:** AWS WAF, IAM, AWS Secrets Manager, and Systems Manager support access control and system protection.
+* **Monitoring:** Amazon CloudWatch collects metrics, sampled requests, and logs from RDS.
+
+---
+
+### 5. Roadmap & Implementation Milestones
+
+* **Phase 1 - Preparation:** Define system requirements, main functions, user scope, number of reports, and audio processing needs.
+* **Phase 2 - Architecture Design:** Design the AWS architecture including frontend, backend, database, storage, queue, speech-to-text, email, security, and monitoring.
+* **Phase 3 - Infrastructure Deployment:** Use Infrastructure as Code to create the necessary AWS resources.
+* **Phase 4 - Application Development:** Complete the frontend, backend, RDS connection, file upload, report creation, and Transcribe processing.
+* **Phase 5 - Testing:** Test access through CloudFront, requests through WAF/ALB, backend connection, database, SQS, Transcribe, and SES.
+* **Phase 6 - Presentation and Optimization:** Present the system, collect results, and delete resources after testing to save costs.
+* **After Deployment:** Upgrade the system toward production if needed, including Multi-AZ, multiple EC2 instances, Redis Adapter, CloudWatch Agent, SNS Alarm, and SES Production Access.
+
+---
 
 ### 6. Budget Estimation
-You can find the budget estimation on the [AWS Pricing Calculator](https://calculator.aws/#/estimate?id=621f38b12a1ef026842ba2ddfe46ff936ed4ab01).  
-Or you can download the [Budget Estimation File](../attachments/budget_estimation.pdf).
 
-### Infrastructure Costs
-- AWS Services:
-    - AWS Lambda: $0.00/month (1,000 requests, 512 MB storage).
-    - S3 Standard: $0.15/month (6 GB, 2,100 requests, 1 GB scanned).
-    - Data Transfer: $0.02/month (1 GB inbound, 1 GB outbound).
-    - AWS Amplify: $0.35/month (256 MB, 500 ms requests).
-    - Amazon API Gateway: $0.01/month (2,000 requests).
-    - AWS Glue ETL Jobs: $0.02/month (2 DPUs).
-    - AWS Glue Crawlers: $0.07/month (1 crawler).
-    - MQTT (IoT Core): $0.08/month (5 devices, 45,000 messages).
+#### Infrastructure Costs
 
-Total: $0.7/month, $8.40/12 months
+*(Assumption: 50 users, ~100 reports/month, ~30 minutes of audio recording/month — demo/MVP environment, region ap-southeast-1)*
 
-- Hardware: $265 one-time (Raspberry Pi 5 and sensors).
+* **Amazon EC2** (t3.small — backend + Transcribe worker): 15,49 USD/month ($0,021/hour × 730 hours).
+* **Amazon RDS MySQL** (db.t3.micro, 20 GB gp3, Single-AZ): 15,62 USD/month ($0,018/hour × 730 hours + 20 GB × $0,115/GB).
+* **NAT Gateway:** 32,85 USD/month ($0,045/hour × 730 hours, excluding data transfer).
+* **Application Load Balancer:** 16,43 USD/month ($0,008/hour × 730 hours + minimum LCU).
+* **AWS WAF** (1 WebACL + 2 Managed Rule Groups): 7,00 USD/month ($5/WebACL + $1/rule group × 2).
+* **Amazon CloudFront** (serving frontend SPA, ~5 GB/month): 0,43 USD/month ($0,085/GB × 5 GB).
+* **Amazon S3** (2 buckets, ~2 GB data + versioning): 0,05 USD/month ($0,025/GB × 2 GB).
+* **Amazon SQS** (Transcribe queue + DLQ, ~100 jobs/month): 0,00 USD/month (within the Free Tier of 1 million requests).
+* **Amazon Transcribe** (~30 minutes of audio recording/month): 0,72 USD/month ($0,024/minute × 30 minutes).
+* **Amazon SES** (~200 emails/month): 0,02 USD/month ($0,10/1,000 emails × 0,2).
+* **Amazon Cognito** (~50 MAU): 0,00 USD/month (within the Free Tier of 50,000 MAU).
+* **AWS Secrets Manager** (3 secrets): 1,20 USD/month ($0,40/secret × 3).
+* **Amazon CloudWatch** (RDS logs, metrics): 0,50 USD/month (basic metrics + log storage).
+
+Total: ~90,31 USD/month
+
+---
 
 ### 7. Risk Assessment
+
 #### Risk Matrix
-- Network Outages: Medium impact, medium probability.
-- Sensor Failures: High impact, low probability.
-- Cost Overruns: Medium impact, low probability.
+
+* NAT Gateway, ALB, WAF, and RDS still incur costs when there are few users: Medium impact, medium probability.
+* EC2 fails or becomes overloaded because only one instance is running: High impact, low probability in the demo environment.
+* RDS Single-AZ encounters an Availability Zone failure: High impact, low probability.
+* Audio file processing fails or a Transcribe job encounters an error: Medium impact, medium probability.
+* SES is still in Sandbox, limiting email sending capability: Medium impact, medium probability.
+* EC2 application logs have not yet been pushed to CloudWatch Logs using CloudWatch Agent: Medium impact, medium probability.
 
 #### Mitigation Strategies
-- Network: Local storage on Raspberry Pi with Docker.
-- Sensors: Regular checks and spares.
-- Cost: AWS budget alerts and optimization.
 
-#### Contingency Plans
-- Revert to manual methods if AWS fails.
-- Use CloudFormation for cost-related rollbacks.
+* **Cost:** Deploy the infrastructure only during testing and presentation, then delete resources using Infrastructure as Code.
+* **EC2:** Limit the Auto Scaling Group to a maximum of one instance in the demo, but it can be expanded to multiple EC2 instances in real deployment.
+* **RDS:** Use Single-AZ to save costs in the demo; upgrade to Multi-AZ when high availability is required.
+* **Transcribe:** Use Amazon SQS and DLQ to manage jobs, reducing task loss when errors occur.
+* **SES:** Use within the sandbox scope during the demo; request SES Production Access if deploying for real use.
+* **Monitoring:** CloudWatch currently collects metrics and RDS logs; add CloudWatch Agent and SNS Alarm during the upgrade phase.
+
+#### Contingency Plan
+
+* If the cloud system encounters an error, the team can recheck resources using Infrastructure as Code and redeploy the same architecture.
+* If Transcribe encounters an error, the job can be sent to the DLQ for checking and reprocessing.
+* If cost reduction is needed, the team can delete cost-incurring resources such as NAT Gateway, ALB, WAF, EC2, and RDS after completing testing.
+* If SES has not been granted Production Access, the team only demonstrates the email sending function within the sandbox scope.
+
+---
 
 ### 8. Expected Outcomes
-#### Technical Improvements: 
-Real-time data and analytics replace manual processes.  
-Scalable to 10-15 stations.
+
+#### Technical Improvements
+
+VDCMS provides a report management system with a web interface, centralized database, and speech-to-text capability. The system helps users create reports more conveniently, while also supporting the team in practicing the deployment of important AWS services in an architecture close to reality.
+
 #### Long-term Value
-1-year data foundation for AI research.  
-Reusable for future projects.
+
+The current architecture can be used as a foundation to develop into a complete production system. In the future, the team can upgrade to two NAT Gateways for two Availability Zones, Auto Scaling with multiple EC2 instances, Amazon ElastiCache Redis for Socket.IO, RDS Multi-AZ, VPC Endpoint for S3 and AWS services, CloudWatch Agent, SNS Alarm, Cognito as the main authentication system, and SES Production Access.
+
+#### Operational Capability
+
+Thanks to the use of Infrastructure as Code, the system can be redeployed when needed for grading or testing. After completing the presentation, the team can delete all resources to avoid incurring costs. This is an approach suitable for the project environment because it balances security, scalability, and operating costs.

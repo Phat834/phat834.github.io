@@ -1,44 +1,43 @@
 ---
 title: "Chia sẻ, đóng góp ý kiến"
-date: 2024-01-01
 weight: 7
 chapter: false
 pre: " <b> 7. </b> "
 ---
-{{% notice warning %}}
-⚠️ **Lưu ý:** Các thông tin dưới đây chỉ nhằm mục đích tham khảo, vui lòng **không sao chép nguyên văn** cho bài báo cáo của bạn kể cả warning này.
-{{% /notice %}}
+Đánh giá chung
+1. Môi trường làm việc
+Không gian làm việc tại đây sở hữu sự năng động và linh hoạt tuyệt vời. Dù làm việc trực tiếp tại văn phòng hay từ xa (WFH), em luôn nhận được sự hỗ trợ nhiệt tình, không khoảng cách từ mọi người mỗi khi gặp vướng mắc kỹ thuật. Văn phòng được thiết kế hiện đại, yên tĩnh, tạo điều kiện lý tưởng để tập trung nghiên cứu sâu. Nếu có một mong muốn nhỏ, em hy vọng chương trình có thể tăng tần suất các buổi kết nối trực tiếp và nới lỏng giới hạn số ngày lên văn phòng để các thực tập sinh gắn kết sâu sắc hơn.
 
->Tại đây bạn có thể tự do đóng góp ý kiến cá nhân về những trải nghiệm khi tham gia chương trình First Cloud Journey, giúp team FCJ cải thiện những vấn đề còn thiếu sót dựa trên các hạng mục sau:
+2. Sự hỗ trợ của mentor / team admin
+Em đặc biệt trân trọng sự đồng hành chuyên nghiệp từ đội ngũ Admin và Mentor. Các anh chị Admin vận hành quy trình cực kỳ bài bản, cung cấp thủ tục và thông tin tài liệu rất nhanh chóng, chuẩn xác. Về phía Mentor, cách tiếp cận giáo dục ở đây rất tiến bộ: thay vì đưa sẵn lời giải, Mentor định hướng bằng câu hỏi, khuyến khích em tự tìm tòi và gỡ lỗi (troubleshooting). Việc được tự chủ thiết lập lộ trình học tập theo tốc độ cá nhân giúp em phát huy tối đa tư duy độc lập.
 
-### Đánh giá chung
+3. Sự phù hợp giữa công việc và chuyên ngành học
+Ban đầu, em nghĩ kiến thức hạ tầng Cloud có khoảng cách nhất định với định hướng Công nghệ thông tin và phát triển phần mềm của mình. Tuy nhiên, khi trực tiếp cấu hình hệ thống, em nhận ra Cloud chính là nền tảng cốt lõi của mọi ứng dụng hiện đại. Việc tiếp cận các mô hình Cloud-Native, Serverless và các cơ chế phân quyền bảo mật cao không chỉ củng cố tư duy lập trình backend mà còn mở rộng nhãn quan công nghệ của em vượt ra khỏi những lý thuyết trên giảng đường.
 
-**1. Môi trường làm việc**  
-Môi trường làm việc rất thân thiện và cởi mở. Các thành viên trong FCJ luôn sẵn sàng hỗ trợ khi mình gặp khó khăn, kể cả ngoài giờ làm việc. Không gian làm việc gọn gàng, thoải mái, giúp mình tập trung tốt hơn. Tuy nhiên, mình nghĩ có thể bổ sung thêm một số buổi giao lưu hoặc team bonding để mọi người hiểu nhau hơn.
+4. Cơ hội học hỏi & phát triển kỹ năng
+Chương trình thực tập đã mang lại cho em một khối lượng tri thức thực chiến khổng lồ. Từ việc chỉ hiểu lý thuyết, em đã có thể tự tay triển khai toàn bộ hạ tầng Cloud cho một dự án thực tế. Phương pháp "nhúng mình vào thực tiễn" này giúp em trưởng thành vượt bậc về kỹ năng chuyên môn. Đồng thời, việc quan sát cách các chuyên gia vận hành công việc hằng ngày đã giúp em định hình rõ nét lộ trình sự nghiệp tương lai.
 
-**2. Sự hỗ trợ của mentor / team admin**  
-Mentor hướng dẫn rất chi tiết, giải thích rõ ràng khi mình chưa hiểu và luôn khuyến khích mình đặt câu hỏi. Team admin hỗ trợ các thủ tục, tài liệu và tạo điều kiện để mình làm việc thuận lợi. Mình đánh giá cao việc mentor cho phép mình thử và tự xử lý vấn đề thay vì chỉ đưa đáp án.
+5. Văn hóa & tinh thần đồng đội
+Văn hóa tổ chức tại đây là sự hòa quyện hoàn hảo giữa sự cởi mở, thân thiện trong giao tiếp và sự kỷ luật, nghiêm túc khi thực thi công việc. Tinh thần đồng đội được thể hiện rõ nét qua cách nhóm 5 người của em phân rã Task dựa trên thế mạnh của từng thành viên. Sự cam kết trách nhiệm cao của mỗi cá nhân và sự nâng đỡ từ các anh chị đi trước mang lại cảm giác của một đội ngũ kỹ sư chuyên nghiệp thực thụ.
 
-**3. Sự phù hợp giữa công việc và chuyên ngành học**  
-Công việc mình được giao phù hợp với kiến thức mình đã học ở trường, đồng thời mở rộng thêm những mảng mới mà mình chưa từng được tiếp cận. Nhờ vậy, mình vừa củng cố kiến thức nền tảng, vừa học thêm kỹ năng thực tế.
-
-**4. Cơ hội học hỏi & phát triển kỹ năng**  
-Trong quá trình thực tập, mình học được nhiều kỹ năng mới như sử dụng công cụ quản lý dự án, kỹ năng làm việc nhóm, và cả cách giao tiếp chuyên nghiệp trong môi trường công ty. Mentor cũng chia sẻ nhiều kinh nghiệm thực tế giúp mình định hướng tốt hơn cho sự nghiệp.
-
-**5. Văn hóa & tinh thần đồng đội**  
-Văn hóa công ty rất tích cực: mọi người tôn trọng lẫn nhau, làm việc nghiêm túc nhưng vẫn vui vẻ. Khi có dự án gấp, mọi người cùng nhau cố gắng, hỗ trợ không phân biệt vị trí. Điều này giúp mình cảm thấy mình là một phần của tập thể, dù chỉ là thực tập sinh.
-
-**6. Chính sách / phúc lợi cho thực tập sinh**  
-Công ty có hỗ trợ phụ cấp thực tập và tạo điều kiện về thời gian linh hoạt khi cần thiết. Ngoài ra, việc được tham gia các buổi đào tạo nội bộ là một điểm cộng lớn.
-
+6. Chính sách / phúc lợi cho thực tập sinh
+Công ty tạo điều kiện tối đa về mặt thời gian, giúp em dễ dàng cân đối giữa việc hoàn thành học phần tại trường và việc thực tập. Hệ thống học liệu được đầu tư bài bản. Đặc biệt, đặc quyền tham gia các buổi Tech Talk và Event công nghệ chuyên sâu là một giá trị gia tăng lớn, kích hoạt nhiều ý tưởng sáng tạo cho bản thân em.
 
 ### Một số câu hỏi khác
-- Điều bạn **hài lòng nhất** trong thời gian thực tập?  
-- Điều bạn nghĩ công ty **cần cải thiện** cho các thực tập sinh sau?  
-- Nếu giới thiệu cho bạn bè, bạn có **khuyên họ thực tập ở đây không**? Vì sao?  
+Điều bạn hài lòng nhất trong thời gian thực tập?
+Đó là cơ hội "thực chiến" (Hands-on) trực tiếp trên các dịch vụ Cloud tiên tiến, kết hợp với môi trường làm việc chuẩn quốc tế và sự dẫn dắt tận tâm từ đội ngũ Mentor, Admin.
 
+Điều bạn nghĩ công ty cần cải thiện cho các thực tập sinh sau?
+Nên linh hoạt hơn trong cơ chế duyệt số buổi lên văn phòng. Ngoài ra, cần rà soát và cập nhật chuỗi video hướng dẫn nội bộ vì một số dịch vụ trên giao diện AWS Console hiện tại đã được nâng cấp tính năng mới so với tài liệu cũ.
+
+Nếu giới thiệu cho bạn bè, bạn có khuyên họ thực tập ở đây không? Vì sao?
+Chắc chắn là CÓ. Đây là bệ phóng công nghệ xuất sắc mang tính thực tế cao, giúp sinh viên tích lũy cả profile chuyên môn lẫn tư duy làm việc chuyên nghiệp để sẵn sàng bứt phá trong ngành IT.
 
 ### Đề xuất & mong muốn
-- Bạn có đề xuất gì để cải thiện trải nghiệm trong kỳ thực tập?  
-- Bạn có muốn tiếp tục chương trình này trong tương lai?
-- Góp ý khác (tự do chia sẻ):
+* **Bạn có đề xuất gì để cải thiện trải nghiệm trong kỳ thực tập?**
+Cập nhật và đồng bộ hóa lại các tài liệu hướng dẫn theo phiên bản AWS mới nhất. Mọi trải nghiệm còn lại đều vượt mong đợi.
+
+* **Bạn có muốn tiếp tục chương trình này trong tương lai?**
+Rất sẵn lòng nếu có cơ hội phù hợp.
+
+* **Góp ý khác (tự do chia sẻ):** Không có.

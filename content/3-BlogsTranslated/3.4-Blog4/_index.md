@@ -1,126 +1,80 @@
 ---
+
 title: "Blog 4"
-date: 2024-01-01
-weight: 1
+date: 2026-07-09
+weight: 4
 chapter: false
 pre: " <b> 3.4. </b> "
----
-{{% notice warning %}}
-⚠️ **Note:** The information below is for reference purposes only. Please **do not copy verbatim** for your report, including this warning.
+----------------------
+
+{{% notice note %}}
+📌 **Infor:** Blog 4 - Amazon EKS Version Rollbacks
 {{% /notice %}}
 
-# Getting Started with Healthcare Data Lakes: Using Microservices
+# Amazon EKS Version Rollbacks - Say goodbye to the fear of "cluster crashes" every time Kubernetes is upgraded
 
-Data lakes can help hospitals and healthcare facilities turn data into business insights, maintain business continuity, and protect patient privacy. A **data lake** is a centralized, managed, and secure repository to store all your data, both in its raw and processed forms for analysis. Data lakes allow you to break down data silos and combine different types of analytics to gain insights and make better business decisions.
-
-This blog post is part of a larger series on getting started with setting up a healthcare data lake. In my final post of the series, *“Getting Started with Healthcare Data Lakes: Diving into Amazon Cognito”*, I focused on the specifics of using Amazon Cognito and Attribute Based Access Control (ABAC) to authenticate and authorize users in the healthcare data lake solution. In this blog, I detail how the solution evolved at a foundational level, including the design decisions I made and the additional features used. You can access the code samples for the solution in this Git repo for reference.
+Hello everyone, today I will quickly share a new and extremely helpful feature from AWS for those operating Kubernetes: **Kubernetes Version Rollbacks** for **Amazon EKS**. This feature promises to help DevOps teams sleep better whenever cluster upgrade season comes around.
 
 ---
 
-## Architecture Guidance
+## Previous problem: A risky "one-way door"
 
-The main change since the last presentation of the overall architecture is the decomposition of a single service into a set of smaller services to improve maintainability and flexibility. Integrating a large volume of diverse healthcare data often requires specialized connectors for each format; by keeping them encapsulated separately as microservices, we can add, remove, and modify each connector without affecting the others. The microservices are loosely coupled via publish/subscribe messaging centered in what I call the “pub/sub hub.”
+Until now, upgrading the **control plane** in open-source Kubernetes has always been a "no turning back" decision. By nature, K8s does not support downgrading the control plane, meaning once you press the upgrade button, there is no way to roll back.
 
-This solution represents what I would consider another reasonable sprint iteration from my last post. The scope is still limited to the ingestion and basic parsing of **HL7v2 messages** formatted in **Encoding Rules 7 (ER7)** through a REST interface.
+This limitation forces enterprises to create extremely complicated testing processes on their own: from setting up **bake periods**, staggering deployment groups, to approval cycles that can last for months.
 
-**The solution architecture is now as follows:**
+With Kubernetes releasing 3 **minor versions** each year, teams managing hundreds of clusters — especially in highly regulated finance and banking environments — often choose to delay upgrades because they are afraid the system may crash and cannot be restored.
 
-> *Figure 1. Overall architecture; colored boxes represent distinct services.*
-
----
-
-While the term *microservices* has some inherent ambiguity, certain traits are common:  
-- Small, autonomous, loosely coupled  
-- Reusable, communicating through well-defined interfaces  
-- Specialized to do one thing well  
-- Often implemented in an **event-driven architecture**
-
-When determining where to draw boundaries between microservices, consider:  
-- **Intrinsic**: technology used, performance, reliability, scalability  
-- **Extrinsic**: dependent functionality, rate of change, reusability  
-- **Human**: team ownership, managing *cognitive load*
+As a result, clusters get stuck on old versions, miss security patches, and reach **End of Support**.
 
 ---
 
-## Technology Choices and Communication Scope
+## Solution: The magical "Undo" button from Amazon EKS
 
-| Communication scope                       | Technologies / patterns to consider                                                        |
-| ----------------------------------------- | ------------------------------------------------------------------------------------------ |
-| Within a single microservice              | Amazon Simple Queue Service (Amazon SQS), AWS Step Functions                               |
-| Between microservices in a single service | AWS CloudFormation cross-stack references, Amazon Simple Notification Service (Amazon SNS) |
-| Between services                          | Amazon EventBridge, AWS Cloud Map, Amazon API Gateway                                      |
+To solve this painful problem, AWS has officially released the **version rollbacks** feature for **Amazon EKS**. This is the "safety net" that helps teams reverse the upgrade process within **7 days** if any conflict or compatibility issue is found, bringing the cluster back to its previous stable state immediately.
 
----
+Unlike community **emulated versions**, which only keep the cluster in a temporary transitional state, EKS rollback brings the system back to the real previous version that was fully validated and had been running stably in production.
 
-## The Pub/Sub Hub
-
-Using a **hub-and-spoke** architecture (or message broker) works well with a small number of tightly related microservices.  
-- Each microservice depends only on the *hub*  
-- Inter-microservice connections are limited to the contents of the published message  
-- Reduces the number of synchronous calls since pub/sub is a one-way asynchronous *push*
-
-Drawback: **coordination and monitoring** are needed to avoid microservices processing the wrong message.
+For example, if upgrading from version `1.34` to `1.35` causes a compatibility issue, teams only need to roll back to `1.34`. There is no need to rebuild the cluster from scratch or rush to fix bugs under time pressure.
 
 ---
 
-## Core Microservice
+## Smart operating mechanism
 
-Provides foundational data and communication layer, including:  
-- **Amazon S3** bucket for data  
-- **Amazon DynamoDB** for data catalog  
-- **AWS Lambda** to write messages into the data lake and catalog  
-- **Amazon SNS** topic as the *hub*  
-- **Amazon S3** bucket for artifacts such as Lambda code
+**Automatic safety assessment:** Before allowing a rollback, EKS uses the **cluster insights** feature to automatically scan the system and flag warnings if there are any issues with node versions or add-on dependencies. If the team has already checked everything and wants to proceed quickly, the `--force` flag can be used to skip this step.
 
-> Only allow indirect write access to the data lake through a Lambda function → ensures consistency.
+**Fast execution time:** The control plane rollback process takes about **20 minutes**, equivalent to a standard upgrade, and the cluster continues operating normally during this time.
 
 ---
 
-## Front Door Microservice
+## Special note for EKS Auto Mode
 
-- Provides an API Gateway for external REST interaction  
-- Authentication & authorization based on **OIDC** via **Amazon Cognito**  
-- Self-managed *deduplication* mechanism using DynamoDB instead of SNS FIFO because:  
-  1. SNS deduplication TTL is only 5 minutes  
-  2. SNS FIFO requires SQS FIFO  
-  3. Ability to proactively notify the sender that the message is a duplicate  
+For teams using **EKS Auto Mode**, meaning the infrastructure is fully managed, this feature is even better because it automatically rolls back both the control plane and the managed nodes together.
 
----
+However, because node rollback must respect the **Pod Disruption Budgets - PDB** configuration to ensure the application does not go down, this process may take longer.
 
-## Staging ER7 Microservice
-
-- Lambda “trigger” subscribed to the pub/sub hub, filtering messages by attribute  
-- Step Functions Express Workflow to convert ER7 → JSON  
-- Two Lambdas:  
-  1. Fix ER7 formatting (newline, carriage return)  
-  2. Parsing logic  
-- Result or error is pushed back into the pub/sub hub  
+To optimize the experience, AWS has added a **cancel API** that allows teams to actively stop the node rollback process at any time to adjust the PDB or change the handling strategy.
 
 ---
 
-## New Features in the Solution
+## Cost and availability
 
-### 1. AWS CloudFormation Cross-Stack References
-Example *outputs* in the core microservice:
-```yaml
-Outputs:
-  Bucket:
-    Value: !Ref Bucket
-    Export:
-      Name: !Sub ${AWS::StackName}-Bucket
-  ArtifactBucket:
-    Value: !Ref ArtifactBucket
-    Export:
-      Name: !Sub ${AWS::StackName}-ArtifactBucket
-  Topic:
-    Value: !Ref Topic
-    Export:
-      Name: !Sub ${AWS::StackName}-Topic
-  Catalog:
-    Value: !Ref Catalog
-    Export:
-      Name: !Sub ${AWS::StackName}-Catalog
-  CatalogArn:
-    Value: !GetAtt Catalog.Arn
-    Export:
-      Name: !Sub ${AWS::StackName}-CatalogArn
+**COMPLETELY FREE:** This feature is included by default. Teams only pay the normal EKS and compute costs, with no additional charges for rollback.
+
+Currently, this feature is available in all commercial **AWS Regions**, supporting both EKS clusters under **standard support** and **extended support**.
+
+---
+
+## Conclusion
+
+The **Kubernetes Version Rollbacks** feature on **Amazon EKS** has thoroughly solved one of the biggest fears for operations teams: failed upgrades with no way back. Maintaining security and keeping systems updated to newer versions is now much safer and easier.
+
+---
+
+## Detailed article link
+
+https://aws.amazon.com/blogs/aws/upgrade-amazon-eks-clusters-with-confidence-using-kubernetes-version-rollbacks/
+
+---
+
+<img src="/images/Blog/blog4.png" style="max-width:100%; margin-bottom:16px;" />
