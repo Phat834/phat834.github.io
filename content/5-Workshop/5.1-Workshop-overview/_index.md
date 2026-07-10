@@ -20,3 +20,7 @@ This workshop focuses on automating the entire deployment and operation lifecycl
 #### System Architecture Diagram
 
 ![Architecture Diagram](/images/2-Proposal/vdcms_architecture.jpg)
+
+#### Project demo video
+
+* Watch the detailed demo video of our team's project deployment and operation here: [Google Drive Demo Link](https://drive.google.com/file/d/1wch0s3zhbv9J-SjKwq4HHKsrtVpJ4B4Z/view?usp=drive_link)

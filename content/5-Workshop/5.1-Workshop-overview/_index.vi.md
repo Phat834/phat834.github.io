@@ -20,3 +20,7 @@ Workshop này tập trung vào việc tự động hóa toàn bộ quy trình tr
 #### Sơ đồ kiến trúc triển khai hệ thống (Architecture Diagram)
 
 ![Sơ đồ kiến trúc](/images/2-Proposal/vdcms_architecture.jpg)
+
+#### Video demo hệ thống
+
+* Xem video demo chi tiết về quá trình vận hành và triển khai dự án nhóm tại: [Google Drive Demo Link](https://drive.google.com/file/d/1wch0s3zhbv9J-SjKwq4HHKsrtVpJ4B4Z/view?usp=drive_link)
