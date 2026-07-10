@@ -6,14 +6,18 @@ chapter: false
 pre: " <b> 4.1. </b> "
 ---
 
-Tên chủ đề: Tìm hiểu và Cập nhật các Xu hướng Công nghệ Điện toán Đám mây mới cùng Chuyên gia AWS.
+Tên chủ đề: Learning Mindset, Prompt Engineering và AI-Ready Fresher.
 
 **Tóm tắt nội dung chính:**
 
-Cập nhật công nghệ mới trong tuần: Các diễn giả từ AWS đã chia sẻ về các dịch vụ/tính năng mới nhất vừa được tối ưu hóa trong hệ sinh thái AWS (như quản lý chi phí đám mây, các cập nhật về bảo mật hạ tầng, và tối ưu hóa hiệu năng hệ thống).
+Tư duy học tập thời đại số (Learning Mindset): Diễn giả chia sẻ cách xây dựng động lực học tập liên tục thông qua việc hiểu cơ chế "phần thưởng tức thời" của não bộ (tương tự như mạng xã hội, game). Từ đó áp dụng phương pháp chia nhỏ mục tiêu, tự thưởng để biến việc học công nghệ thành thói quen bền vững.
 
-Ứng dụng AI và Cloud: Buổi chia sẻ nhấn mạnh vào xu hướng tích hợp Generative AI (Trí tuệ nhân tạo tạo sinh) vào nền tảng Cloud (ví dụ như dịch vụ AWS Bedrock), cách các doanh nghiệp tận dụng mô hình nền tảng để xây dựng ứng dụng thông minh một cách nhanh chóng.
+Nâng cao chất lượng giao tiếp với AI (Prompt Engineering): Buổi chia sẻ đi sâu vào kỹ thuật tối ưu hóa đầu ra của LLM. Một prompt chuẩn cần có cấu trúc rõ ràng (Role, Instruction, Context, Input, Output Format, Examples, Constraints). Đồng thời, nhấn mạnh vào việc hiểu chi phí token và các kỹ thuật nâng cao như Chain-of-Thought hay RAG để tối ưu hiệu suất làm việc.
 
-Góc nhìn kỹ thuật: Cách tối ưu hóa kiến trúc Microservices, quản lý định danh/phân quyền (IAM/Cognito), và các bài học thực tế (Best Practices) khi triển khai dự án trên môi trường Production để hệ thống đạt độ ổn định và bảo mật cao.
+Tư duy kỹ sư phần mềm (Software Engineering Mindset): Nhắc nhở các fresher tránh bẫy "Vibe Coding" (chỉ copy-paste code chạy được từ AI). Thay vào đó, cần tập trung vào quy trình, cấu trúc dự án, viết code dễ bảo trì, áp dụng các chuẩn kỹ nghệ như BMAD-METHOD và coi AI là công cụ hỗ trợ dưới sự điều phối của con người.
 
-Giá trị gặt hái được (Kiến thức/Kỹ năng): Nắm bắt được tư duy thiết kế hệ thống chuẩn hóa theo mô hình Cloud-native, hiểu rõ tầm quan trọng của việc tối ưu chi phí vận hành hạ tầng và cập nhật các công nghệ AI tiên tiến đang là xu hướng của ngành IT.
+Giá trị gặt hái được (Kiến thức/Kỹ năng): Nắm bắt được tư duy tự học và thích nghi độc lập; biết cách viết prompt có cấu trúc để khai thác AI hiệu quả; hình thành mindset làm dự án chuyên nghiệp, kiểm soát chất lượng mã nguồn và hiểu rõ góc nhìn của nhà tuyển dụng đối với một AI-Ready Fresher.
+* Ảnh
+![EventParticipated](/images/EventParticipated/ev1.jpg)
+![EventParticipated](/images/EventParticipated/ev2.jpg)
+![EventParticipated](/images/EventParticipated/ev3.jpg)
