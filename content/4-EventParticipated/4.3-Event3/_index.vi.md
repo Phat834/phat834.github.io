@@ -1,5 +1,5 @@
 ---
-title: "Cloud Architect & AWS Insights Event"
+title: "Event 3"
 date: 2026-07-11
 weight: 3
 chapter: false
